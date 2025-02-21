@@ -1,157 +1,191 @@
 [
   {
+    "id": 1,
     "meal": "Grilled Chicken with Quinoa and Roasted Broccoli",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 2,
     "meal": "Salmon with Brown Rice and Garlic Green Beans",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 3,
     "meal": "Tofu Stir-Fry with Wild Rice and Mixed Vegetables",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 4,
     "meal": "Shrimp Tacos with Cabbage Slaw and Avocado",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 5,
     "meal": "Lentil Soup with Whole Grain Bread and Side Salad",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 6,
     "meal": "Turkey Meatballs with Whole Wheat Pasta and Marinara Sauce",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 7,
     "meal": "Baked Cod with Sweet Potatoes and Asparagus",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 8,
     "meal": "Chickpea Curry with Basmati Rice and Spinach",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 9,
     "meal": "Beef Stir-Fry with Brown Rice and Bell Peppers",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 10,
     "meal": "Egg and Avocado Toast with Sautéed Kale",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 11,
     "meal": "Black Bean Burrito with Whole Wheat Tortilla and Salsa",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 12,
     "meal": "Grilled Pork Chop with Mashed Sweet Potatoes and Green Beans",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 13,
     "meal": "Cottage Cheese with Oats, Nuts, and Berries",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 14,
     "meal": "Baked Chicken Parmesan with Whole Wheat Spaghetti",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 15,
     "meal": "Stuffed Bell Peppers with Ground Turkey and Brown Rice",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 16,
     "meal": "Seitan Stir-Fry with Jasmine Rice and Steamed Bok Choy",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 17,
     "meal": "Greek Salad with Grilled Chicken and Whole Wheat Pita",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 18,
     "meal": "Vegetable and Chickpea Stew with Whole Grain Bread",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 19,
     "meal": "Grilled Steak with Quinoa and Roasted Brussels Sprouts",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 20,
     "meal": "Falafel with Hummus, Pita, and Cucumber Salad",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 21,
     "meal": "Soba Noodles with Tofu and Stir-Fried Vegetables",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 22,
     "meal": "Baked Salmon with Roasted Cauliflower and Wild Rice",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 23,
     "meal": "Eggplant Parmesan with Whole Wheat Penne",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 24,
     "meal": "Ground Beef Tacos with Whole Wheat Tortillas and Guacamole",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 25,
     "meal": "BBQ Chicken with Corn on the Cob and Side Salad",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 26,
     "meal": "Black Bean and Sweet Potato Enchiladas",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 27,
     "meal": "Scrambled Eggs with Whole Grain Toast and Sautéed Spinach",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 28,
     "meal": "Teriyaki Chicken with Brown Rice and Steamed Broccoli",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 29,
     "meal": "Chia Pudding with Almond Butter and Fresh Berries",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 30,
     "meal": "Roasted Vegetable and Quinoa Bowl with Feta Cheese",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 31,
     "meal": "Grilled Fish Tacos with Cabbage and Avocado Crema",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 32,
     "meal": "Pasta Primavera with Whole Wheat Pasta and Parmesan",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 33,
     "meal": "Miso Soup with Tofu and Steamed Edamame",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 34,
     "meal": "Turkey and Avocado Wrap with Whole Wheat Tortilla",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 35,
     "meal": "Zucchini Noodles with Pesto and Grilled Chicken",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 36,
     "meal": "Lentil and Spinach Dal with Brown Rice",
     "image_url": "https://via.placeholder.com/150"
   },
   {
-    "meal": "Baked Falafel with Tabouli and Hummus",
-    "image_url": "https://via.placeholder.com/150"
-  },
-  {
+    "id": 38,
     "meal": "Roasted Chickpeas with Quinoa and Sautéed Kale",
     "image_url": "https://via.placeholder.com/150"
   },
   {
+    "id": 39,
     "meal": "Grilled Tempeh with Brown Rice and Roasted Peppers",
     "image_url": "https://via.placeholder.com/150"
   }

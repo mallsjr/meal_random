@@ -18,26 +18,32 @@ const saveMeals = (meals: any) => {
   fs.writeJSONSync(filePath, meals, { spaces: 2 });
 };
 
+// Generate a new unique ID
+const getNextId = (meals: any[]) => {
+  return meals.length > 0 ? Math.max(...meals.map(m => m.id)) + 1 : 1;
+};
+
 // Add a meal
 program
   .command("add <meal> <image_url>")
   .description("Add a new meal")
   .action((meal, image_url) => {
     const meals = loadMeals();
-    meals.push({ meal, image_url });
+    const newMeal = { id: getNextId(meals), meal, image_url };
+    meals.push(newMeal);
     saveMeals(meals);
-    console.log(`Added: ${meal}`);
+    console.log(`Added: ${meal} (ID: ${newMeal.id})`);
   });
 
-// Remove a meal
+// Remove a meal by ID
 program
-  .command("remove <meal>")
-  .description("Remove a meal")
-  .action((meal) => {
+  .command("remove <id>")
+  .description("Remove a meal by ID")
+  .action((id) => {
     let meals = loadMeals();
-    const newMeals = meals.filter((m: any) => m.meal !== meal);
+    const newMeals = meals.filter((m: any) => m.id !== parseInt(id));
     saveMeals(newMeals);
-    console.log(`Removed: ${meal}`);
+    console.log(`Removed meal with ID: ${id}`);
   });
 
 // List all meals
@@ -49,19 +55,19 @@ program
     console.log(meals);
   });
 
-// Modify a meal
+// Modify a meal by ID
 program
-  .command("modify <oldMeal> <newMeal> <newImageUrl>")
-  .description("Modify a meal")
-  .action((oldMeal, newMeal, newImageUrl) => {
+  .command("modify <id> <newMeal> <newImageUrl>")
+  .description("Modify a meal by ID")
+  .action((id, newMeal, newImageUrl) => {
     let meals = loadMeals();
-    const index = meals.findIndex((m: any) => m.meal === oldMeal);
+    const index = meals.findIndex((m: any) => m.id === parseInt(id));
     if (index !== -1) {
-      meals[index] = { meal: newMeal, image_url: newImageUrl };
+      meals[index] = { id: parseInt(id), meal: newMeal, image_url: newImageUrl };
       saveMeals(meals);
-      console.log(`Updated: ${oldMeal} -> ${newMeal}`);
+      console.log(`Updated meal with ID ${id} -> ${newMeal}`);
     } else {
-      console.log("Meal not found.");
+      console.log(`Meal with ID ${id} not found.`);
     }
   });
 
