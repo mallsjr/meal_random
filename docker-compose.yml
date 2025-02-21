@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: bun-htmx-app
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./public:/app/public  # Mount static assets
+      - ./meals.json:/app/meals.json  # Mount JSON file for updates
+    restart: unless-stopped
