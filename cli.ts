@@ -1,74 +1,80 @@
 import { Command } from "commander";
-import fs from "fs-extra";
+import Redis from "ioredis";
 
 const program = new Command();
-const filePath = "public/meals.json";
+const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 
-// Load meals data
-const loadMeals = () => {
-  try {
-    return fs.readJSONSync(filePath);
-  } catch (err) {
-    return [];
-  }
-};
+const MEAL_LIST_KEY = "meals"; // Key for storing meal IDs
 
-// Save meals data
-const saveMeals = (meals: any) => {
-  fs.writeJSONSync(filePath, meals, { spaces: 2 });
-};
-
-// Generate a new unique ID
-const getNextId = (meals: any[]) => {
-  return meals.length > 0 ? Math.max(...meals.map(m => m.id)) + 1 : 1;
+// Generate a unique ID for meals
+const generateId = async (): Promise<number> => {
+  return await redis.incr("meal:id"); // Auto-incrementing ID
 };
 
 // Add a meal
 program
   .command("add <meal> <image_url>")
   .description("Add a new meal")
-  .action((meal, image_url) => {
-    const meals = loadMeals();
-    const newMeal = { id: getNextId(meals), meal, image_url };
-    meals.push(newMeal);
-    saveMeals(meals);
-    console.log(`Added: ${meal} (ID: ${newMeal.id})`);
+  .action(async (meal, image_url) => {
+    const id = await generateId();
+    const mealData = { id, meal, image_url };
+
+    await redis.hset(`meal:${id}`, mealData);
+    await redis.sadd(MEAL_LIST_KEY, id.toString());
+
+    console.log(`Added meal [ID ${id}]: ${meal}`);
+    redis.quit();
   });
 
-// Remove a meal by ID
+// Remove a meal
 program
   .command("remove <id>")
   .description("Remove a meal by ID")
-  .action((id) => {
-    let meals = loadMeals();
-    const newMeals = meals.filter((m: any) => m.id !== parseInt(id));
-    saveMeals(newMeals);
-    console.log(`Removed meal with ID: ${id}`);
+  .action(async (id) => {
+    const exists = await redis.exists(`meal:${id}`);
+    if (!exists) {
+      console.log(`Meal with ID ${id} not found.`);
+      redis.quit();
+      return;
+    }
+
+    await redis.del(`meal:${id}`);
+    await redis.srem(MEAL_LIST_KEY, id);
+
+    console.log(`Removed meal with ID ${id}`);
+    redis.quit();
   });
 
 // List all meals
 program
   .command("list")
   .description("List all meals")
-  .action(() => {
-    const meals = loadMeals();
+  .action(async () => {
+    const mealIds = await redis.smembers(MEAL_LIST_KEY);
+    const meals = await Promise.all(
+      mealIds.map(async (id) => redis.hgetall(`meal:${id}`))
+    );
+
     console.log(meals);
+    redis.quit();
   });
 
-// Modify a meal by ID
+// Modify a meal
 program
   .command("modify <id> <newMeal> <newImageUrl>")
   .description("Modify a meal by ID")
-  .action((id, newMeal, newImageUrl) => {
-    let meals = loadMeals();
-    const index = meals.findIndex((m: any) => m.id === parseInt(id));
-    if (index !== -1) {
-      meals[index] = { id: parseInt(id), meal: newMeal, image_url: newImageUrl };
-      saveMeals(meals);
-      console.log(`Updated meal with ID ${id} -> ${newMeal}`);
-    } else {
+  .action(async (id, newMeal, newImageUrl) => {
+    const exists = await redis.exists(`meal:${id}`);
+    if (!exists) {
       console.log(`Meal with ID ${id} not found.`);
+      redis.quit();
+      return;
     }
+
+    await redis.hset(`meal:${id}`, { id, meal: newMeal, image_url: newImageUrl });
+
+    console.log(`Updated meal [ID ${id}]: ${newMeal}`);
+    redis.quit();
   });
 
 program.parse(process.argv);
