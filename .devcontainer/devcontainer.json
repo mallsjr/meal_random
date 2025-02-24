@@ -2,8 +2,9 @@
   "name": "Bun Dev Container",
   "build": {
     "dockerfile": "Dockerfile",
-    "context": ".."  // Set build context to the project root
+    "context": ".."
   },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace",
   "forwardPorts": [3000],
   "postCreateCommand": "bun install",
