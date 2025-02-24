@@ -10,3 +10,16 @@ services:
       - ./public:/app/public  # Mount static assets
       - ./meals.json:/app/meals.json  # Mount JSON file for updates
     restart: unless-stopped
+
+  redis:
+    image: redis:latest
+    container_name: meal-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+    driver: local
