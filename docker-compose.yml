@@ -8,7 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - ./public:/app/public  # Mount static assets
-      - ./meals.json:/app/meals.json  # Mount JSON file for updates
+      #- ./meals.json:/app/meals.json  # Mount JSON file for updates
     restart: unless-stopped
 
   redis:
