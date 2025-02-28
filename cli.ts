@@ -2,13 +2,31 @@ import { Command } from "commander";
 import Redis from "ioredis";
 
 const program = new Command();
-//const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
+// const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 const redis = new Redis("redis://localhost:6379");
 
 // Generate a unique meal ID
 const generateId = async () => {
   return await redis.incr("meal_id_counter");
 };
+
+// Fetch a random meal from TheMealDB API
+async function fetchRandomMeal() {
+  try {
+    const response = await fetch("https://www.themealdb.com/api/json/v1/1/random.php");
+    const data = await response.json();
+
+    if (!data.meals || data.meals.length === 0) {
+      console.log("Failed to fetch a random meal.");
+      return null;
+    }
+
+    return data.meals[0]; // Get the first meal object
+  } catch (error) {
+    console.error("Error fetching meal from TheMealDB:", error);
+    return null;
+  }
+}
 
 // Add a meal
 program
@@ -22,6 +40,27 @@ program
     await redis.sadd("meals", id.toString());
 
     console.log(`Added meal: ${meal} with ID ${id}`);
+  });
+
+// Add a random meal from TheMealDB API
+program
+  .command("add-random")
+  .description("Fetch a random meal from TheMealDB and add it to Redis")
+  .action(async () => {
+    const meal = await fetchRandomMeal();
+    if (!meal) return;
+
+    const id = await generateId();
+    const mealData = {
+      id,
+      meal: meal.strMeal,
+      image_url: meal.strMealThumb,
+    };
+
+    await redis.hset(`meal:${id}`, mealData);
+    await redis.sadd("meals", id.toString());
+
+    console.log(`Added random meal: ${meal.strMeal} (ID: ${id})`);
   });
 
 // Remove a meal by ID

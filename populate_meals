@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Number of times to run the command
+COUNT=20
+
+echo "Adding $COUNT random meals to the database..."
+
+for ((i=1; i<=COUNT; i++)); do
+  echo "Adding meal #$i..."
+  bun cli.ts add-random
+  sleep 1  # Small delay to prevent API rate limits (adjust if needed)
+done
+
+echo "Finished adding meals!"
