@@ -11,12 +11,19 @@ const app = new Hono();
 async function getMeals() {
   const mealIds = await redis.smembers("meals");
   const meals = await Promise.all(
-    mealIds.map(async (id) => await redis.hgetall(`meal:${id}`))
+    mealIds.map(async (id) => {
+      const meal = await redis.hgetall(`meal:${id}`);
+
+      return {
+        ...meal,
+        ingredients: JSON.parse(meal.ingredients || "[]"), // Parse stored ingredients
+      };
+    })
   );
   return meals;
 }
 
-// Function to get a random meal
+// Function to get a random meal with ingredients
 async function getRandomMeal() {
   const meals = await getMeals();
   if (meals.length === 0) {
@@ -24,14 +31,24 @@ async function getRandomMeal() {
   }
 
   const meal = meals[Math.floor(Math.random() * meals.length)];
-  return `<h2>${meal.meal}</h2>
-          <img src="${meal.image_url}" alt="${meal.meal}" id="meal-img">`;
+  
+  // Create an ingredients list
+  const ingredientsList = meal.ingredients
+    .map((ing) => `<li>${ing.measure} ${ing.ingredient}</li>`)
+    .join("");
+
+  return `
+    <h2>${meal.meal}</h2>
+    <img src="${meal.image_url}" alt="${meal.meal}" id="meal-img">
+    <h3>Ingredients:</h3>
+    <ul>${ingredientsList}</ul>
+  `;
 }
 
 // Serve the main HTML page
 app.get("/", serveStatic({ path: "./views/index.html" }));
 
-// Serve meals from Redis
+// Serve all meals from Redis
 app.get("/meals.json", async (c) => {
   try {
     const meals = await getMeals();
