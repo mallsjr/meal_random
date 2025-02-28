@@ -4,6 +4,7 @@ import Redis from "ioredis";
 
 const PORT = 3000;
 const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
+console.log("REDIS_URL:", process.env.REDIS_URL);
 
 const app = new Hono();
 

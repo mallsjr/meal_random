@@ -2,7 +2,8 @@ import { Command } from "commander";
 import Redis from "ioredis";
 
 const program = new Command();
-const redis = new Redis("redis://localhost:6379");
+// const redis = new Redis("redis://localhost:6379");
+const redis = new Redis("redis://raspberrypi.lan:6379");
 
 // Generate a unique meal ID
 const generateId = async () => {
